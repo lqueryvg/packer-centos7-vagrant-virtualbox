@@ -1,0 +1,65 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+
+#  roles:
+#    - geerlingguy.nfs
+#    - geerlingguy.packer-rhel
+
+  tasks:
+  - name: Ensure necessary packages are installed.
+    yum: "name={{ item }} state=present"
+    with_items:
+      - wget
+      - perl
+      - cpp
+      - gcc
+      - make
+      - bzip2
+      - http://vault.centos.org/centos/7.2.1511/os/x86_64/Packages/kernel-headers-3.10.0-327.el7.x86_64.rpm
+      - http://vault.centos.org/centos/7.2.1511/os/x86_64/Packages/kernel-devel-3.10.0-327.el7.x86_64.rpm
+      - libffi-devel
+      - openssl-devel
+
+  # Fix slow DNS.
+  - name: Fix slow DNS (adapted from Bento).
+    lineinfile:
+      dest: /etc/sysconfig/network
+      regexp: '^RES_OPTIONS'
+      line: 'RES_OPTIONS="single-request-reopen"'
+      state: present
+
+  - name: Restart network service (explicitly).
+    service: name=network state=restarted
+
+  # SSH daemon configuration.
+  - name: Configure SSH daemon.
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+      state: present
+    with_items:
+      - { regexp: '^UseDNS', line: 'UseDNS no' }
+      - { regexp: '^GSSAPIAuthentication', line: 'GSSAPIAuthentication no' }
+
+  # Vagrant SSH configuration.
+  - name: Configure Vagrant .ssh directory.
+    file:
+      path: /home/vagrant/.ssh
+      state: directory
+      owner: vagrant
+      group: vagrant
+      mode: 0700
+
+  - name: Get Vagrant's public key.
+    get_url:
+      url: https://github.com/mitchellh/vagrant/raw/master/keys/vagrant.pub
+      dest: /home/vagrant/.ssh/authorized_keys
+      owner: vagrant
+      group: vagrant
+      mode: 0600
+
+  - include_tasks: virtualbox.yml
+
