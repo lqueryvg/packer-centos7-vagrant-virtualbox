@@ -23,17 +23,22 @@ Creates a Virtualbox .box file suitable for use with Vagrant, with a very specif
 
 ## Usage
 
-    vi vars.json                      # check correct iso
-    export BOX_NAME=centos72-7511     # change according to specific version
+    vi conf.json                      # check / edit config
     make clean
     make
 
 ## Directory Structure
 
     .
-    ├── vars.json            # user configuration
+    ├── conf.json            # user configuration
     ├── Makefile
     ├── README.md
     ├── output/              # final .box file goes in here
     ├── packer_cache/        # downloaded artifacts (e.g. iso's)
     └── src/                 # source scripts and config
+
+## Diagram
+
+![Diagram](src/packer.png)
+
+    Diagram source: https://drive.google.com/file/d/1eySy5xITxpMHR8rxNUjJzDktSZtpd637/view?usp=sharing

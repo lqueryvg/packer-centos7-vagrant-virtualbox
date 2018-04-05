@@ -1,6 +1,9 @@
 {
   "variables": {
-    "BOX_NAME": "{{env `BOX_NAME`}}"
+    "box_name": "",
+    "iso_url": "",
+    "iso_checksum": "",
+    "kernel_devel_packages": ""
   },
 
   "provisioners": [
@@ -11,6 +14,7 @@
     },
     {
       "type": "ansible-local",
+      "extra_arguments": [ "--extra-vars \"kernel_devel_packages={{user `kernel_devel_packages`}}\"" ],
       "playbook_file": "src/ansible/main.yml",
       "playbook_dir": "src/ansible"
     },
@@ -44,7 +48,7 @@
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "packer-{{user `BOX_NAME`}}-x86_64",
+      "vm_name": "packer-{{user `box_name`}}-x86_64",
       "vboxmanage": [
         [
           "modifyvm",
@@ -63,7 +67,7 @@
   ],
   "post-processors": [
     {
-      "output": "output/{{.Provider}}-{{user `BOX_NAME`}}.box",
+      "output": "output/{{.Provider}}-{{user `box_name`}}.box",
       "type": "vagrant"
     }
   ]

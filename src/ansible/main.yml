@@ -3,11 +3,11 @@
   become: yes
   gather_facts: yes
 
-#  roles:
-#    - geerlingguy.nfs
-#    - geerlingguy.packer-rhel
-
   tasks:
+    
+  - name: debug
+    debug: msg={{ kernel_devel_packages }}
+
   - name: Ensure necessary packages are installed.
     yum: "name={{ item }} state=present"
     with_items:
