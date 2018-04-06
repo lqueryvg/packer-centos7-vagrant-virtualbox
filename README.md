@@ -17,18 +17,19 @@ Creates a Virtualbox .box file suitable for use with Vagrant, with a very specif
 
 ## Pre-requisites
 
+- [VirtualBox](https://www.virtualbox.org/)
 - [Packer](http://www.packer.io/)
 - [Vagrant](http://vagrantup.com/)
-- [VirtualBox](https://www.virtualbox.org/) (if you want to build the VirtualBox box)
 
 ## Usage
 
-Unfortunately (due to packer limitations),
+Unfortunately (due to Packer limitations),
 user configuration has to live in more than one place.
 
     vi conf.json                  # check / edit config
-    vi ansible/packages.yml       # check / edit (pay attention to the kernel package versions)
-    make
+    vi ansible/packages.yml       # check / edit (check kernel package versions)
+
+    packer build -force -var-file conf.json src/main.json
 
 ## Directory Structure
 
@@ -37,7 +38,6 @@ user configuration has to live in more than one place.
     ├── ansible/
     |   ├─ packages.yml      # <<<── MORE user configuration
     |   └─ ...
-    ├── Makefile
     ├── README.md
     ├── output/              # final .box file goes in here
     ├── packer_cache/        # downloaded artifacts (e.g. iso's), can be deleted

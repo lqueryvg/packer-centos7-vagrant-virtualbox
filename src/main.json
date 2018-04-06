@@ -2,7 +2,8 @@
   "variables": {
     "box_name": "",
     "iso_url": "",
-    "iso_checksum": ""
+    "iso_checksum": "",
+    "home": "{{env `HOME`}}"
   },
 
   "provisioners": [
@@ -65,7 +66,7 @@
   ],
   "post-processors": [
     {
-      "output": "output/{{.Provider}}-{{user `box_name`}}.box",
+      "output": "{{user `home`}}/{{.Provider}}-{{user `box_name`}}.box",
       "type": "vagrant"
     }
   ]
