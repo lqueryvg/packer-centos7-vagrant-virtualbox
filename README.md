@@ -1,8 +1,8 @@
-# Packer Virtualbox Centos7 7.2-7511
+# Packer Virtualbox Vagrant Centos7 7.2-7511
 
 ## Description
 
-Creates a Virtualbox .box file suitable for use with Vagrant, with a very specific version of Centos with specific configuration.
+Creates a Virtualbox .box file suitable for use with Vagrant, with a very specific version of Centos and specific configuration.
 
 - working Virtualbox shared filesystem driver (vboxsf)
 - virtual DVD
