@@ -2,8 +2,7 @@
   "variables": {
     "box_name": "",
     "iso_url": "",
-    "iso_checksum": "",
-    "kernel_devel_packages": ""
+    "iso_checksum": ""
   },
 
   "provisioners": [
@@ -14,9 +13,8 @@
     },
     {
       "type": "ansible-local",
-      "extra_arguments": [ "--extra-vars \"kernel_devel_packages={{user `kernel_devel_packages`}}\"" ],
-      "playbook_file": "src/ansible/main.yml",
-      "playbook_dir": "src/ansible"
+      "playbook_file": "ansible/main.yml",
+      "playbook_dir": "ansible"
     },
     {
       "type": "shell",

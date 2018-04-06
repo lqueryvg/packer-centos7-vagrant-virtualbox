@@ -1,0 +1,12 @@
+---
+packages:
+- wget
+- perl
+- cpp
+- gcc
+- make
+- bzip2
+- libffi-devel
+- openssl-devel
+- http://vault.centos.org/centos/7.2.1511/os/x86_64/Packages/kernel-headers-3.10.0-327.el7.x86_64.rpm
+- http://vault.centos.org/centos/7.2.1511/os/x86_64/Packages/kernel-devel-3.10.0-327.el7.x86_64.rpm

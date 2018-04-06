@@ -2,25 +2,14 @@
 - hosts: all
   become: yes
   gather_facts: yes
+  vars_files:
+    - packages.yml
 
   tasks:
-    
-  - name: debug
-    debug: msg={{ kernel_devel_packages }}
 
-  - name: Ensure necessary packages are installed.
+  - name: Install packages
     yum: "name={{ item }} state=present"
-    with_items:
-      - wget
-      - perl
-      - cpp
-      - gcc
-      - make
-      - bzip2
-      - http://vault.centos.org/centos/7.2.1511/os/x86_64/Packages/kernel-headers-3.10.0-327.el7.x86_64.rpm
-      - http://vault.centos.org/centos/7.2.1511/os/x86_64/Packages/kernel-devel-3.10.0-327.el7.x86_64.rpm
-      - libffi-devel
-      - openssl-devel
+    with_items: "{{ packages }}"
 
   # Fix slow DNS.
   - name: Fix slow DNS (adapted from Bento).
