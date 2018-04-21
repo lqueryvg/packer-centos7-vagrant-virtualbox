@@ -4,6 +4,7 @@
 
 Creates a Virtualbox .box file suitable for use with Vagrant, with a very specific version of Centos and specific configuration.
 
+- root filesystem on LVM
 - working Virtualbox shared filesystem driver (vboxsf)
 - virtual DVD
 - vagrant user *not* with uid `1000` (so the first usr *you* create will get `1000`)
